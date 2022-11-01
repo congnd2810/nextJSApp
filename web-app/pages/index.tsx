@@ -1,6 +1,12 @@
 import Link from 'next/link'
+import type { ReactElement } from 'react'
+import Layout from '../components/layout'
+import NestedLayout from '../components/nested-laytout'
+import Footer from '../components/footer'
+import NavBar from '../components/navbar'
+import type { NextPageWithLayout } from './_app'
 
-export default function Home() {
+const Home: NextPageWithLayout = () => {
   return (
     <ul>
       <li>
@@ -16,3 +22,12 @@ export default function Home() {
     </ul>
   )
 }
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
+}
+export default Home
