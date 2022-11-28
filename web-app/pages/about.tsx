@@ -1,29 +1,46 @@
-import { GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from "next";
+// import Header from "../components/header";
+// import { GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from "next";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Header from "../components/header";
+// const Header = dynamic(() => import('../components/header'), {ssr: false})
 
 export interface AboutPageProps {
   posts: any[];
 }
 
 export default function AboutPage({posts}: AboutPageProps) {
-  const router = useRouter();
-  const { time, date } = router.query
-  return <div>
+  const [postList, setPostList] = useState([])
+  const router = useRouter()
+  console.log(router.query)
+
+  useEffect(() => {
+    (async () => {
+      const res1 = await fetch('http://localhost:3001/api/v1/classes')
+      const data1 = await res1.json()
+      setPostList(data1)
+    })()
+  }, [])
+  return (<div>
+    <Header/>
     <h1>about fish</h1>
-    <ul>
+    {/* <ul>
       {posts.map(fish => <li key={fish.taxon.id}>{fish.taxon.english_common_name}</li>)}
-    </ul>
-    <p>{time}, {date}</p>
-  </div>
+    </ul> */}
+    <ul>
+      {postList.map((name: any) => <li key={name.id}>{name.name}</li>)}
+    </ul> 
+  </div>)
 }
 
-export const getStaticProps: GetStaticProps<AboutPageProps> = async (
-  context: GetStaticPropsContext
-) => {
-  console.log('static props');
-  const res = await fetch('https://api.inaturalist.org/v1/observations/species_counts?verifiable=true&page=1&spam=false&iconic_taxa%5B%5D=Actinopterygii&locale=en-US&per_page=50')
-  const data = await res.json();
-  return {
-    props: { posts: data.results },
-  };
-};
+// export const getStaticProps: GetStaticProps<AboutPageProps> = async (
+//   context: GetStaticPropsContext
+// ) => {
+//   console.log('static props');
+//   const res = await fetch('https://api.inaturalist.org/v1/observations/species_counts?verifiable=true&page=1&spam=false&iconic_taxa%5B%5D=Actinopterygii&locale=en-US&per_page=50')
+//   const data = await res.json();
+//   return {
+//     props: { posts: data.results },
+//   };
+// };
