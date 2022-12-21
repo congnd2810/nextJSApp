@@ -17,9 +17,9 @@ export default function AboutPage({posts}: AboutPageProps) {
 
   useEffect(() => {
     (async () => {
-      const res1 = await fetch('http://localhost:3001/api/v1/classes')
+      const res1 = await fetch('https://api.nationalize.io/?name=nathaniel')
       const data1 = await res1.json()
-      setPostList(data1)
+      setPostList(data1.country)
     })()
   }, [])
   return (<div>
@@ -29,7 +29,7 @@ export default function AboutPage({posts}: AboutPageProps) {
       {posts.map(fish => <li key={fish.taxon.id}>{fish.taxon.english_common_name}</li>)}
     </ul> */}
     <ul>
-      {postList.map((name: any) => <li key={name.id}>{name.name}</li>)}
+      {postList.map((name: any) => <li key={name.country_id}>{name.probability}</li>)}
     </ul> 
   </div>)
 }
