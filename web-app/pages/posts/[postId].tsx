@@ -34,10 +34,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<PostPageProps> = async (
   context: GetStaticPropsContext
 ) => {
-  console.log('static props', context.params?.postId);
+  const postId = context.params?.postId
+  if (!postId) return {notFound: true}
+
   const res = await fetch('https://api.inaturalist.org/v1/observations/species_counts?verifiable=true&page=1&spam=false&iconic_taxa%5B%5D=Actinopterygii&locale=en-US&per_page=50')
   const data = await res.json();
   return {
     props: { posts: data.results },
+    revalidate: 5
   };
 };

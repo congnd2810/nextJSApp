@@ -17,7 +17,7 @@ export default function AboutPage({posts}: AboutPageProps) {
 
   useEffect(() => {
     (async () => {
-      const res1 = await fetch('https://api.nationalize.io/?name=nathaniel')
+      const res1 = await fetch('https://api.publicapis.org/entries')
       const data1 = await res1.json()
       setPostList(data1.country)
     })()
