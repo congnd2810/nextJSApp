@@ -1,33 +1,28 @@
-import Link from 'next/link'
-import type { ReactElement } from 'react'
-import Layout from '../components/layout'
-import NestedLayout from '../components/nested-laytout'
-import Footer from '../components/footer'
-import NavBar from '../components/navbar'
-import type { NextPageWithLayout } from './_app'
+import Link from "next/link";
+import type { ReactElement } from "react";
+import type { NextPageWithLayout } from "./_app";
+import { MainLayout } from "../components/layout";
 
 const Home: NextPageWithLayout = () => {
   return (
-    <ul>
-      <li>
-        <Link href="/about">
-          <a>Go to about</a>
-        </Link>
-      </li>
-      <li>
-        <Link href="/content/abc">
-          <a>Also goes to pages/content/[id].js</a>
-        </Link>
-      </li>
-    </ul>
-  )
-}
+    <div>
+      <ul>
+        <li>
+          <Link href="/about">
+            <a>Go to about</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/users/1">
+            <a>Also goes to pages/users/[id].js</a>
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  )
-}
-export default Home
+  return <MainLayout>{page}</MainLayout>;
+};
+export default Home;
